@@ -136,15 +136,19 @@ This will:
 ### 7. Run the Server
 
 ```bash
-# Using uv (recommended)
-uv run src/main.py
+# Using uv with wrapper (recommended)
+uv run run_server.py
 
-# Or using python directly
-python -m src.main
-
-# Or convenience wrapper
+# Or using python with wrapper
 python run_server.py
+
+# Or directly with src/main.py
+uv run src/main.py
+# or
+python -m src.main
 ```
+
+**Note:** `run_server.py` is a convenience wrapper that calls `src.main.main()`. Both methods work identically.
 
 ---
 
@@ -699,7 +703,7 @@ Add to your MCP client config (Cursor/Claude):
   "mcpServers": {
     "outlook-mcp": {
       "command": "uv",
-      "args": ["run", "src/main.py"],
+      "args": ["run", "run_server.py"],
       "cwd": "C:\\Users\\manus\\OneDrive\\Desktop\\microsoft oulook"
     }
   }
