@@ -89,20 +89,38 @@ pip install -r requirements.txt
    - `offline_access` - Maintain access to data (for refresh tokens)
 4. Click **Grant admin consent** (if you're an admin)
 
-### 4. Configure Environment
+### 4. Get Client ID and Client Secret
+
+1. **Get Client ID:**
+   - In your app registration, go to **Overview**
+   - Copy the **Application (client) ID** → this is your `OUTLOOK_CLIENT_ID`
+
+2. **Create and Get Client Secret:**
+   - Go to **Certificates & secrets**
+   - Click **New client secret**
+   - Add a description and choose expiration
+   - Click **Add**
+   - **IMPORTANT**: Copy the **Value** (not the Secret ID) - you will **NOT** see it again!
+   - This **Value** is your `OUTLOOK_CLIENT_SECRET`
+
+### 5. Configure Environment
 
 Create `.env` file:
 
 ```env
-# REQUIRED - Get from Azure Portal App Registration Overview
+# REQUIRED - Application (client) ID from Azure Portal Overview
 OUTLOOK_CLIENT_ID=your-application-client-id-here
 
-# OPTIONAL - Only needed for confidential client flows
-# OUTLOOK_CLIENT_SECRET=your-optional-secret-here
+# REQUIRED - Client secret Value (not Secret ID) from Certificates & secrets
+OUTLOOK_CLIENT_SECRET=your-client-secret-value-here
+
+# Optional - Default is already set
 OUTLOOK_REDIRECT_URI=https://login.microsoftonline.com/common/oauth2/nativeclient
 ```
 
-### 5. Run Authentication (REQUIRED - Run Once)
+**⚠️ Important:** When copying the client secret, make sure you copy the **Value** column, not the **Secret ID**. The Value is only shown once when you create the secret!
+
+### 6. Run Authentication (REQUIRED - Run Once)
 
 ```bash
 python test_auth.py
@@ -115,7 +133,7 @@ This will:
 - Accept permissions once
 - Save tokens to `.token_cache.json`
 
-### 6. Run the Server
+### 7. Run the Server
 
 ```bash
 # Using uv (recommended)
@@ -622,9 +640,15 @@ update_mailbox_settings
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `OUTLOOK_CLIENT_ID` | Yes | Azure App Registration Application (client) ID |
-| `OUTLOOK_CLIENT_SECRET` | No | Optional, only for confidential client flows |
+| `OUTLOOK_CLIENT_ID` | Yes | Azure App Registration **Application (client) ID** from Overview page |
+| `OUTLOOK_CLIENT_SECRET` | Yes | Client secret **Value** (not Secret ID) from Certificates & secrets - copy the Value column, shown only once! |
 | `OUTLOOK_REDIRECT_URI` | No | Default: `https://login.microsoftonline.com/common/oauth2/nativeclient` |
+
+**⚠️ Important:** When creating a client secret in Azure Portal:
+- Go to **Certificates & secrets** → **New client secret**
+- After creating, you'll see two columns: **Secret ID** and **Value**
+- Copy the **Value** column (not the Secret ID) - this is your `OUTLOOK_CLIENT_SECRET`
+- The Value is only displayed once and cannot be retrieved later!
 
 ### Auto-Detected (No Setup Needed)
 
