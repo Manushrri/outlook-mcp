@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "outlook-mcp": {
+      "command": "python",
+      "args": ["run_server.py"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "OUTLOOK_CLIENT_ID": "${env:OUTLOOK_CLIENT_ID}",
+        "OUTLOOK_CLIENT_SECRET": "${env:OUTLOOK_CLIENT_SECRET}"
+      }
+    }
+  }
+}
+
+
+

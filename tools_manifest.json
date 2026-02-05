@@ -1,0 +1,1552 @@
+{
+  "tools": [
+    {
+      "id": "add_mail_attachment",
+      "target": "src.tools.mail_tools:add_mail_attachment",
+      "description": "Add an attachment to an email message. Use when you have a message id and need to attach a small (<3 MB) file or reference. Get message_id from tools like list_messages or search_messages (then pick a message's id).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the message to attach to"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the attachment"
+          },
+          "odata_type": {
+            "type": "string",
+            "description": "The OData type (e.g., '#microsoft.graph.fileAttachment')"
+          },
+          "contentBytes": {
+            "type": "string",
+            "description": "Base64-encoded content of the file"
+          },
+          "contentId": {
+            "type": "string",
+            "description": "Content ID for inline attachments"
+          },
+          "contentLocation": {
+            "type": "string",
+            "description": "Content location URL"
+          },
+          "contentType": {
+            "type": "string",
+            "description": "MIME type of the attachment"
+          },
+          "isInline": {
+            "type": "boolean",
+            "description": "Whether the attachment is inline"
+          },
+          "item": {
+            "type": "object",
+            "description": "Item data for item attachments"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["message_id", "name", "odata_type", "contentBytes"]
+      }
+    },
+    {
+      "id": "create_calendar",
+      "target": "src.tools.calendar_tools:create_calendar",
+      "description": "Create a new calendar in the signed-in user's mailbox. Use when organizing events into a separate calendar.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the calendar"
+          },
+          "color": {
+            "type": "string",
+            "enum": ["auto", "lightBlue", "lightGreen", "lightOrange", "lightGray", "lightYellow", "lightTeal", "lightPink", "lightBrown", "lightPurple", "lightRed"],
+            "description": "Calendar color preset"
+          },
+          "hexColor": {
+            "type": "string",
+            "description": "Hex color code for the calendar"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    {
+      "id": "create_contact_folder",
+      "target": "src.tools.contact_tools:create_contact_folder",
+      "description": "Create a new contact folder in the user's mailbox. Use when needing to organize contacts into custom folders.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The display name of the contact folder"
+          },
+          "parentFolderId": {
+            "type": "string",
+            "description": "Parent folder ID to create subfolder"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["displayName"]
+      }
+    },
+    {
+      "id": "create_email_rule",
+      "target": "src.tools.rule_tools:create_email_rule",
+      "description": "Create email rule filter with conditions and actions.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The display name of the rule"
+          },
+          "conditions": {
+            "type": "object",
+            "description": "The conditions that trigger the rule"
+          },
+          "actions": {
+            "type": "object",
+            "description": "The actions to perform when conditions are met"
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "description": "Whether the rule is enabled"
+          },
+          "sequence": {
+            "type": "integer",
+            "description": "The order of the rule in the rule list"
+          }
+        },
+        "required": ["displayName", "conditions", "actions"]
+      }
+    },
+    {
+      "id": "create_mail_folder",
+      "target": "src.tools.folder_tools:create_mail_folder",
+      "description": "Create a new mail folder. Use when you need to organize email into a new folder.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The display name of the mail folder"
+          },
+          "isHidden": {
+            "type": "boolean",
+            "description": "Whether the folder is hidden"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["displayName"]
+      }
+    },
+    {
+      "id": "create_master_category",
+      "target": "src.tools.category_tools:create_master_category",
+      "description": "Create a new category in the user's master category list. Use after selecting a unique display name.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The display name of the category"
+          },
+          "color": {
+            "type": "string",
+            "enum": ["preset0", "preset1", "preset2", "preset3", "preset4", "preset5", "preset6", "preset7", "preset8", "preset9", "preset10", "preset11", "preset12", "preset13", "preset14", "preset15", "preset16", "preset17", "preset18", "preset19", "preset20", "preset21", "preset22", "preset23", "preset24"],
+            "description": "Color preset (preset0 through preset24)"
+          }
+        },
+        "required": ["displayName"]
+      }
+    },
+    {
+      "id": "delete_mail_folder",
+      "target": "src.tools.folder_tools:delete_mail_folder",
+      "description": "Delete a mail folder from the user's mailbox. Use when you need to remove an existing mail folder. Get folder_id from list_mail_folders (use the id from the folder you want to delete).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "folder_id": {
+            "type": "string",
+            "description": "The ID of the mail folder to delete"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["folder_id"]
+      }
+    },
+    {
+      "id": "download_attachment",
+      "target": "src.tools.attachment_tools:download_outlook_attachment",
+      "description": "Download a specific file attachment from an email message. The attachment must contain 'contentBytes' (binary data) and not be a link or embedded item. Get message_id from list_messages or search_messages, and attachment_id from list_attachments.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the message containing the attachment"
+          },
+          "attachment_id": {
+            "type": "string",
+            "description": "The ID of the attachment to download"
+          },
+          "file_name": {
+            "type": "string",
+            "description": "The name to save the file as"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["message_id", "attachment_id", "file_name"]
+      }
+    },
+    {
+      "id": "get_mailbox_settings",
+      "target": "src.tools.settings_tools:get_mailbox_settings",
+      "description": "Retrieve mailbox settings. Use when you need to view settings such as automatic replies, time zone, and working hours for the signed-in or specified user.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "expand": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to expand"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "get_mail_delta",
+      "target": "src.tools.settings_tools:get_mail_delta",
+      "description": "Retrieve incremental changes (delta) of messages in a mailbox. Use when syncing mailbox updates since last checkpoint. Get folder_id from list_mail_folders if you want delta for a specific folder.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "folder_id": {
+            "type": "string",
+            "description": "Folder ID to get delta for specific folder"
+          },
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "expand": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to expand"
+          },
+          "filter": {
+            "type": "string",
+            "description": "OData filter expression"
+          },
+          "orderby": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to order by"
+          },
+          "search": {
+            "type": "string",
+            "description": "Search query"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of items to return"
+          },
+          "skip": {
+            "type": "integer",
+            "description": "Number of items to skip"
+          },
+          "count": {
+            "type": "boolean",
+            "description": "Whether to include count of items"
+          },
+          "delta_token": {
+            "type": "string",
+            "description": "Token from previous delta call for incremental sync"
+          },
+          "skip_token": {
+            "type": "string",
+            "description": "Token for pagination"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "get_mail_tips",
+      "target": "src.tools.settings_tools:get_mail_tips",
+      "description": "Retrieve mail tips such as automatic replies and mailbox full status. Use when you need to check recipient status before sending mail.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "EmailAddresses": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of email addresses to get mail tips for"
+          },
+          "MailTipsOptions": {
+            "type": "string",
+            "description": "Comma-separated mail tip options: automaticReplies, customMailTip, deliveryRestriction, externalMemberCount, mailboxFullStatus, maxMessageSize, moderationStatus, recipientScope, recipientSuggestions, totalMemberCount"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["EmailAddresses", "MailTipsOptions"]
+      }
+    },
+    {
+      "id": "get_master_categories",
+      "target": "src.tools.category_tools:get_master_categories",
+      "description": "Retrieve the user's master category list. Use when you need to get all categories defined for the user.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "filter": {
+            "type": "string",
+            "description": "OData filter expression"
+          },
+          "orderby": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to order by"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of items to return"
+          },
+          "skip": {
+            "type": "integer",
+            "description": "Number of items to skip"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "get_supported_languages",
+      "target": "src.tools.settings_tools:get_supported_languages",
+      "description": "Retrieve supported languages in the user's mailbox. Use when you need to display or select from available mailbox languages.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "get_supported_time_zones",
+      "target": "src.tools.settings_tools:get_supported_time_zones",
+      "description": "Retrieve supported time zones in the user's mailbox. Use when you need a list of time zones to display or choose from for event scheduling.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "timeZoneStandard": {
+            "type": "string",
+            "enum": ["Windows", "Iana"],
+            "description": "Time zone standard (Windows or Iana)"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "list_calendars",
+      "target": "src.tools.list_tools:list_calendars",
+      "description": "List calendars in the signed-in user's mailbox. Use when you need to retrieve calendars with optional OData queries. Use this first when you need a calendar id for other calendar-related operations.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "filter": {
+            "type": "string",
+            "description": "OData filter expression"
+          },
+          "orderby": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to order by"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of items to return"
+          },
+          "skip": {
+            "type": "integer",
+            "description": "Number of items to skip"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "list_event_attachments",
+      "target": "src.tools.list_tools:list_event_attachments",
+      "description": "List attachments for a specific calendar event. Use when you have an event ID and need to view its attachments. Get event_id from list_events or get_event.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "The ID of the event"
+          },
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "filter": {
+            "type": "string",
+            "description": "OData filter expression"
+          },
+          "orderby": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to order by"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of items to return"
+          },
+          "skip": {
+            "type": "integer",
+            "description": "Number of items to skip"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["event_id"]
+      }
+    },
+    {
+      "id": "list_attachments",
+      "target": "src.tools.list_tools:list_outlook_attachments",
+      "description": "List metadata (like name, size, and type, but not contentBytes) for all attachments of a specified email message. Get message_id from list_messages or search_messages.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the message"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["message_id"]
+      }
+    },
+    {
+      "id": "list_reminders",
+      "target": "src.tools.list_tools:list_reminders",
+      "description": "Retrieve reminders for events occurring within a specified time range. Use when you need to see upcoming reminders between two datetimes. Use list_events or get_event if you need full event details.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "startDateTime": {
+            "type": "string",
+            "description": "Start of the time range (ISO 8601 format, e.g., 2026-02-04T00:00:00Z)"
+          },
+          "endDateTime": {
+            "type": "string",
+            "description": "End of the time range (ISO 8601 format, e.g., 2026-02-11T00:00:00Z)"
+          },
+          "userId": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["startDateTime", "endDateTime"]
+      }
+    },
+    {
+      "id": "add_event_attachment",
+      "target": "src.tools.calendar_tools:add_event_attachment",
+      "description": "Add an attachment to a specific calendar event. Use when you need to attach a file or nested item to an existing event. Get event_id from list_events or get_event. For file attachments, you can provide: file_path (auto-encodes file), text_content (auto-encodes text), or contentBytes (pre-encoded Base64).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "The ID of the event"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the attachment (e.g., 'document.pdf', 'notes.txt')"
+          },
+          "odata_type": {
+            "type": "string",
+            "enum": ["#microsoft.graph.fileAttachment", "#microsoft.graph.itemAttachment"],
+            "description": "The type of attachment"
+          },
+          "file_path": {
+            "type": "string",
+            "description": "Path to a file to attach - will be automatically read and Base64 encoded"
+          },
+          "text_content": {
+            "type": "string",
+            "description": "Plain text content to attach - will be automatically Base64 encoded"
+          },
+          "contentBytes": {
+            "type": "string",
+            "description": "Base64-encoded content (use only if you already have Base64 data)"
+          },
+          "item": {
+            "type": "object",
+            "description": "Item data (for item attachments)"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["event_id", "name", "odata_type"]
+      }
+    },
+    {
+      "id": "create_event",
+      "target": "src.tools.calendar_tools:create_event",
+      "description": "Create a new calendar event, ensuring start datetime is chronologically before end datetime. Use list_calendars first if you need to inspect calendars before creating events.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "The subject of the event"
+          },
+          "body": {
+            "type": "string",
+            "description": "The body content of the event"
+          },
+          "start_datetime": {
+            "type": "string",
+            "description": "Start date/time (ISO 8601 format, e.g., 2026-02-05T10:00:00)"
+          },
+          "end_datetime": {
+            "type": "string",
+            "description": "End date/time (ISO 8601 format, e.g., 2026-02-05T11:00:00)"
+          },
+          "time_zone": {
+            "type": "string",
+            "description": "Time zone (e.g., Pacific Standard Time, UTC)"
+          },
+          "location": {
+            "type": "string",
+            "description": "Location of the event"
+          },
+          "attendees_info": {
+            "type": "array",
+            "items": {"type": "object"},
+            "description": "List of attendee info [{emailAddress: {address, name}, type}]"
+          },
+          "categories": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of categories"
+          },
+          "is_html": {
+            "type": "boolean",
+            "description": "Whether body is HTML"
+          },
+          "is_online_meeting": {
+            "type": "boolean",
+            "description": "Whether it's an online meeting"
+          },
+          "online_meeting_provider": {
+            "type": "string",
+            "description": "Online meeting provider (teamsForBusiness, skypeForBusiness, skypeForConsumer)"
+          },
+          "show_as": {
+            "type": "string",
+            "description": "Show as status (free, tentative, busy, oof, workingElsewhere)"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["subject", "body", "start_datetime", "end_datetime", "time_zone"]
+      }
+    },
+    {
+      "id": "create_contact",
+      "target": "src.tools.contact_tools:create_contact",
+      "description": "Create a new contact in the user's contacts folder. Use get_contact_folders or list_contacts if you want to inspect existing contacts/folders first.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "givenName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "surname": {
+            "type": "string",
+            "description": "Last name"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name"
+          },
+          "emailAddresses": {
+            "type": "array",
+            "items": {"type": "object"},
+            "description": "List of email addresses [{address, name}]"
+          },
+          "businessPhones": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of business phone numbers"
+          },
+          "mobilePhone": {
+            "type": "string",
+            "description": "Mobile phone number"
+          },
+          "homePhone": {
+            "type": "string",
+            "description": "Home phone number"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "Company name"
+          },
+          "department": {
+            "type": "string",
+            "description": "Department"
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "Job title"
+          },
+          "officeLocation": {
+            "type": "string",
+            "description": "Office location"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Birthday (ISO 8601 date, e.g., 1990-01-15)"
+          },
+          "categories": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of categories"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Notes about the contact"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "create_draft",
+      "target": "src.tools.mail_tools:create_draft",
+      "description": "Create an email draft with subject, body, recipients, and an optional attachment. Supports creating drafts as part of existing conversation threads. Use list_messages to later locate this draft by subject, recipients, or isDraft=true.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "The subject of the email"
+          },
+          "body": {
+            "type": "string",
+            "description": "The body content of the email"
+          },
+          "to_recipients": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of recipient email addresses"
+          },
+          "cc_recipients": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of CC email addresses"
+          },
+          "bcc_recipients": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of BCC email addresses"
+          },
+          "is_html": {
+            "type": "boolean",
+            "description": "Whether body is HTML"
+          },
+          "conversation_id": {
+            "type": "string",
+            "description": "Conversation ID for threading"
+          },
+          "attachment": {
+            "type": "object",
+            "description": "Attachment object {name, contentType, contentBytes}"
+          }
+        },
+        "required": ["subject", "body", "to_recipients"]
+      }
+    },
+    {
+      "id": "create_draft_reply",
+      "target": "src.tools.mail_tools:create_draft_reply",
+      "description": "Create a draft reply to an existing message, optionally including a comment and cc/bcc recipients. Get the original message_id from list_messages or search_messages.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the message to reply to"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Optional comment/reply text"
+          },
+          "cc_emails": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of CC email addresses"
+          },
+          "bcc_emails": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of BCC email addresses"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["message_id"]
+      }
+    },
+    {
+      "id": "delete_contact",
+      "target": "src.tools.contact_tools:delete_contact",
+      "description": "Permanently delete an existing contact. Get contact_id from list_contacts or get_contact.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "contact_id": {
+            "type": "string",
+            "description": "The ID of the contact to delete"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["contact_id"]
+      }
+    },
+    {
+      "id": "delete_event",
+      "target": "src.tools.calendar_tools:delete_event",
+      "description": "Delete an existing calendar event, with an option to send cancellation notifications to attendees. Get event_id from list_events or get_event.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "The ID of the event to delete"
+          },
+          "send_notifications": {
+            "type": "boolean",
+            "description": "Whether to send cancellation notifications to attendees"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["event_id"]
+      }
+    },
+    {
+      "id": "get_contact",
+      "target": "src.tools.contact_tools:get_contact",
+      "description": "Retrieve a specific contact by its contact ID. Get contact_id from list_contacts or get_contact_folders + contacts in a folder.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "contact_id": {
+            "type": "string",
+            "description": "The ID of the contact to retrieve"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["contact_id"]
+      }
+    },
+    {
+      "id": "get_contact_folders",
+      "target": "src.tools.contact_tools:get_contact_folders",
+      "description": "Retrieves a list of contact folders in the signed-in user's mailbox. Use after authentication when you need to browse or select among contact folders.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "filter": {
+            "type": "string",
+            "description": "OData filter expression"
+          },
+          "orderby": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to order by"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of items to return"
+          },
+          "skip": {
+            "type": "integer",
+            "description": "Number of items to skip"
+          },
+          "expand": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to expand"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "get_event",
+      "target": "src.tools.calendar_tools:get_event",
+      "description": "Retrieve the full details of a specific calendar event by its ID. Get event_id from list_events or from reminders that reference events.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "The ID of the event to retrieve"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["event_id"]
+      }
+    },
+    {
+      "id": "get_message",
+      "target": "src.tools.mail_tools:get_message",
+      "description": "Retrieve a specific email message by its ID from the user's mailbox. Use the 'select' parameter to include specific fields like 'internetMessageHeaders'. Get message_id from list_messages or search_messages.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the message to retrieve"
+          },
+          "select": {
+            "type": "string",
+            "description": "Comma-separated list of properties to select (e.g., 'subject,body,internetMessageHeaders')"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["message_id"]
+      }
+    },
+    {
+      "id": "get_profile",
+      "target": "src.tools.profile_tools:get_profile",
+      "description": "Retrieves the Microsoft Outlook profile for a specified user.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "get_schedule",
+      "target": "src.tools.calendar_tools:get_schedule",
+      "description": "Retrieves free/busy schedule information for specified email addresses within a defined time window.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "Schedules": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of email addresses to get schedule for"
+          },
+          "StartTime": {
+            "type": "object",
+            "description": "Start time object {dateTime: '2026-02-04T09:00:00', timeZone: 'Pacific Standard Time'}"
+          },
+          "EndTime": {
+            "type": "object",
+            "description": "End time object {dateTime: '2026-02-04T18:00:00', timeZone: 'Pacific Standard Time'}"
+          },
+          "availabilityViewInterval": {
+            "type": "string",
+            "description": "Interval in minutes (e.g., '30')"
+          }
+        },
+        "required": ["Schedules", "StartTime", "EndTime"]
+      }
+    },
+    {
+      "id": "list_contacts",
+      "target": "src.tools.list_tools:list_contacts",
+      "description": "Retrieves a user's Microsoft Outlook contacts, from the default or a specified contact folder.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "contact_folder_id": {
+            "type": "string",
+            "description": "Contact folder ID to retrieve contacts from a specific folder"
+          },
+          "filter": {
+            "type": "string",
+            "description": "OData filter expression"
+          },
+          "orderby": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to order by"
+          },
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of items to return"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "list_events",
+      "target": "src.tools.list_tools:list_events",
+      "description": "Retrieves events from a user's Outlook calendar via Microsoft Graph API, supporting pagination, filtering, property selection, sorting, and timezone specification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "expand_recurring_events": {
+            "type": "boolean",
+            "description": "If true, uses calendarView to expand recurring events"
+          },
+          "filter": {
+            "type": "string",
+            "description": "OData filter expression"
+          },
+          "orderby": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to order by"
+          },
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "skip": {
+            "type": "integer",
+            "description": "Number of items to skip"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "Timezone for the response (e.g., 'Pacific Standard Time')"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of items to return"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "list_mail_folders",
+      "target": "src.tools.list_tools:list_mail_folders",
+      "description": "Lists a user's top-level mail folders. Use when you need folders like Inbox, Drafts, Sent Items. Set include_hidden_folders=true to include hidden folders.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "include_hidden_folders": {
+            "type": "boolean",
+            "description": "Whether to include hidden folders"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "list_messages",
+      "target": "src.tools.list_tools:list_messages",
+      "description": "Retrieves a list of email messages from a specified mail folder in an Outlook mailbox, with options for filtering (including by conversationId to get all messages in a thread), pagination, and sorting. Ensure 'user_id' and 'folder' are valid, and all date/time strings are in ISO 8601 format.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "folder": {
+            "type": "string",
+            "description": "Mail folder ID or well-known name (inbox, drafts, sentitems, deleteditems)"
+          },
+          "categories": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of categories to filter by"
+          },
+          "conversationId": {
+            "type": "string",
+            "description": "Conversation ID to get all messages in a thread"
+          },
+          "from_address": {
+            "type": "string",
+            "description": "Sender email address to filter by"
+          },
+          "has_attachments": {
+            "type": "boolean",
+            "description": "Filter for messages with attachments"
+          },
+          "importance": {
+            "type": "string",
+            "enum": ["low", "normal", "high"],
+            "description": "Importance filter"
+          },
+          "is_read": {
+            "type": "boolean",
+            "description": "Filter for read/unread messages"
+          },
+          "orderby": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to order by"
+          },
+          "received_date_time_ge": {
+            "type": "string",
+            "description": "Filter for receivedDateTime >= value (ISO 8601)"
+          },
+          "received_date_time_gt": {
+            "type": "string",
+            "description": "Filter for receivedDateTime > value (ISO 8601)"
+          },
+          "received_date_time_le": {
+            "type": "string",
+            "description": "Filter for receivedDateTime <= value (ISO 8601)"
+          },
+          "received_date_time_lt": {
+            "type": "string",
+            "description": "Filter for receivedDateTime < value (ISO 8601)"
+          },
+          "select": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of properties to select"
+          },
+          "sent_date_time_gt": {
+            "type": "string",
+            "description": "Filter for sentDateTime > value (ISO 8601)"
+          },
+          "sent_date_time_lt": {
+            "type": "string",
+            "description": "Filter for sentDateTime < value (ISO 8601)"
+          },
+          "skip": {
+            "type": "integer",
+            "description": "Number of items to skip"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Exact subject to filter by"
+          },
+          "subject_contains": {
+            "type": "string",
+            "description": "Substring to search in subject"
+          },
+          "subject_endswith": {
+            "type": "string",
+            "description": "Suffix to search in subject"
+          },
+          "subject_startswith": {
+            "type": "string",
+            "description": "Prefix to search in subject"
+          },
+          "top": {
+            "type": "integer",
+            "description": "Number of items to return"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "id": "move_message",
+      "target": "src.tools.mail_tools:move_message",
+      "description": "Move a message to another folder within the specified user's mailbox. This creates a new copy of the message in the destination folder and removes the original message. Get message_id from list_messages or search_messages, and destination_id from list_mail_folders.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the message to move"
+          },
+          "destination_id": {
+            "type": "string",
+            "description": "The ID of the destination folder (or well-known name like 'inbox', 'drafts', 'deleteditems')"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["message_id", "destination_id"]
+      }
+    },
+    {
+      "id": "reply_email",
+      "target": "src.tools.mail_tools:reply_email",
+      "description": "Send a plain text reply to an email message, identified by message_id, allowing optional CC and BCC recipients. Get message_id from list_messages or search_messages (must be a received message, not a draft).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the message to reply to"
+          },
+          "comment": {
+            "type": "string",
+            "description": "The reply text/comment to send"
+          },
+          "cc_emails": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of CC email addresses"
+          },
+          "bcc_emails": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of BCC email addresses"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["message_id", "comment"]
+      }
+    },
+    {
+      "id": "search_messages",
+      "target": "src.tools.mail_tools:search_messages",
+      "description": "Search messages in the mailbox using filters for sender, subject, attachments, and pagination. Use this to find message_id values for tools like get_message, reply_email, add_mail_attachment, move_message, and download_attachment.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query string"
+          },
+          "fromEmail": {
+            "type": "string",
+            "description": "Sender email address to filter by"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject to search for"
+          },
+          "hasAttachments": {
+            "type": "boolean",
+            "description": "Filter for messages with attachments"
+          },
+          "from_index": {
+            "type": "integer",
+            "description": "Starting index for pagination"
+          },
+          "size": {
+            "type": "integer",
+            "description": "Number of results to return"
+          },
+          "enable_top_results": {
+            "type": "boolean",
+            "description": "Enable top results sorting"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "id": "send_email",
+      "target": "src.tools.mail_tools:send_email",
+      "description": "Send an email with subject, body, recipients, and an optional attachment via Microsoft Graph API. Attachments require a non-empty file with valid name and mimetype. Use get_profile if you need the current user's details before sending.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "The subject of the email"
+          },
+          "body": {
+            "type": "string",
+            "description": "The body content of the email"
+          },
+          "to_email": {
+            "type": "string",
+            "description": "The primary recipient email address"
+          },
+          "to_name": {
+            "type": "string",
+            "description": "Name of the primary recipient"
+          },
+          "cc_emails": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of CC email addresses"
+          },
+          "bcc_emails": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of BCC email addresses"
+          },
+          "is_html": {
+            "type": "boolean",
+            "description": "Whether body is HTML"
+          },
+          "attachment": {
+            "type": "object",
+            "description": "Attachment object {name, contentType, contentBytes}"
+          },
+          "save_to_sent_items": {
+            "type": "boolean",
+            "description": "Whether to save the email to Sent Items (default: true)"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["subject", "body", "to_email"]
+      }
+    },
+    {
+      "id": "update_calendar_event",
+      "target": "src.tools.calendar_tools:update_calendar_event",
+      "description": "Update specified fields of an existing calendar event. Get event_id from list_events or get_event.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "The ID of the event to update"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the event"
+          },
+          "body": {
+            "type": "object",
+            "description": "Body object with contentType and content"
+          },
+          "start_datetime": {
+            "type": "string",
+            "description": "Start date/time (ISO 8601 format, e.g., 2026-02-05T10:00:00)"
+          },
+          "end_datetime": {
+            "type": "string",
+            "description": "End date/time (ISO 8601 format, e.g., 2026-02-05T11:00:00)"
+          },
+          "time_zone": {
+            "type": "string",
+            "description": "Time zone (e.g., Pacific Standard Time, UTC)"
+          },
+          "location": {
+            "type": "object",
+            "description": "Location object with displayName"
+          },
+          "attendees": {
+            "type": "array",
+            "items": {"type": "object"},
+            "description": "List of attendee info [{emailAddress: {address, name}, type}]"
+          },
+          "categories": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of categories"
+          },
+          "show_as": {
+            "type": "string",
+            "enum": ["free", "tentative", "busy", "oof", "workingElsewhere"],
+            "description": "Show as status"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["event_id"]
+      }
+    },
+    {
+      "id": "update_contact",
+      "target": "src.tools.contact_tools:update_contact",
+      "description": "Update an existing contact, identified by contact_id for the specified user_id, requiring at least one other field to be modified. Get contact_id from list_contacts or get_contact.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "contact_id": {
+            "type": "string",
+            "description": "The ID of the contact to update"
+          },
+          "givenName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "surname": {
+            "type": "string",
+            "description": "Last name"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name"
+          },
+          "emailAddresses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "description": "Email address"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Display name for the email address"
+                }
+              },
+              "required": ["address"]
+            },
+            "description": "List of email addresses [{address, name}]"
+          },
+          "businessPhones": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of business phone numbers"
+          },
+          "mobilePhone": {
+            "type": "string",
+            "description": "Mobile phone number"
+          },
+          "homePhones": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of home phone numbers"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "Company name"
+          },
+          "department": {
+            "type": "string",
+            "description": "Department"
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "Job title"
+          },
+          "officeLocation": {
+            "type": "string",
+            "description": "Office location"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Birthday (ISO 8601 date, e.g., 1990-01-15)"
+          },
+          "categories": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of categories"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Notes about the contact"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["contact_id"]
+      }
+    },
+    {
+      "id": "update_email",
+      "target": "src.tools.mail_tools:update_email",
+      "description": "Update specified properties of an existing email message. message_id must identify a valid message within the specified user_id's mailbox, and it must be a draft. Get draft message_id from list_messages (filter by folder='drafts' and is_read/isDraft as needed) or from create_draft.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "The ID of the message to update"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the email"
+          },
+          "body": {
+            "type": "object",
+            "description": "Body object with contentType and content"
+          },
+          "to_recipients": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of TO recipient email addresses"
+          },
+          "cc_recipients": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of CC recipient email addresses"
+          },
+          "bcc_recipients": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of BCC recipient email addresses"
+          },
+          "importance": {
+            "type": "string",
+            "enum": ["low", "normal", "high"],
+            "description": "Importance level"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User ID (defaults to 'me')"
+          }
+        },
+        "required": ["message_id"]
+      }
+    },
+    {
+      "id": "update_mailbox_settings",
+      "target": "src.tools.settings_tools:update_mailbox_settings",
+      "description": "Tool to update mailbox settings for the signed-in user. Use when you need to configure automatic replies, default time zone, language, or working hours. Example: schedule automatic replies for vacation.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "automaticRepliesSetting": {
+            "type": "object",
+            "description": "Automatic replies setting object with status, externalAudience, scheduledStartDateTime, scheduledEndDateTime, internalReplyMessage, externalReplyMessage"
+          },
+          "language": {
+            "type": "object",
+            "description": "Language object with locale and displayName"
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "Time zone string (e.g., 'Pacific Standard Time')"
+          },
+          "workingHours": {
+            "type": "object",
+            "description": "Working hours object with daysOfWeek, startTime, endTime, timeZone"
+          }
+        },
+        "required": []
+      }
+    }
+  ]
+}
+
